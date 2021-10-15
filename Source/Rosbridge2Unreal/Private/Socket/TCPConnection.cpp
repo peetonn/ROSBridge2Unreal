@@ -121,14 +121,14 @@ uint32 UTCPConnection::Run()
 			}
 
 			ROSData Data;
-			try {
+			// try {
 				Data = jsoncons::bson::decode_bson<ROSData>(BinaryBuffer.GetData(), BinaryBuffer.GetData() + BSONMessageLength);
-			}
-			catch (jsoncons::ser_error e)
-			{
-				UE_LOG(LogROSBridge, Error, TEXT("Error while parsing BSON message (Ignoring message)"));
-				continue;
-			}
+			// }
+			// catch (jsoncons::ser_error e)
+			// {
+			// 	UE_LOG(LogROSBridge, Error, TEXT("Error while parsing BSON message (Ignoring message)"));
+			// 	continue;
+			// }
 
 			if (IncomingMessageCallback && !bTerminateReceiverThread) IncomingMessageCallback(Data);
 
@@ -151,7 +151,7 @@ uint32 UTCPConnection::Run()
 
 			if (BytesRead <= 0) continue;
 
-			try {
+			// try {
 				Parser.update(reinterpret_cast<char*>(BinaryBuffer.GetData()), BytesRead);
 				do
 				{
@@ -164,12 +164,12 @@ uint32 UTCPConnection::Run()
 						Parser.reset();
 					}
 				} while (!Parser.source_exhausted());
-			}
-			catch (jsoncons::ser_error e)
-			{
-				UE_LOG(LogROSBridge, Fatal, TEXT("Error while parsing JSON message: %hs"), e.what());
-				throw;
-			}
+			// }
+			// catch (jsoncons::ser_error e)
+			// {
+			// 	UE_LOG(LogROSBridge, Fatal, TEXT("Error while parsing JSON message: %hs"), e.what());
+			// 	throw;
+			// }
 		}
 	}
 

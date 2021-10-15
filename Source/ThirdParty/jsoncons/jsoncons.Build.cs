@@ -13,7 +13,8 @@ public class jsoncons : ModuleRules
 		Type = ModuleType.External;
 
         PublicDefinitions.AddRange(new string[]{});
-		
+        PublicDefinitions.Add("JSONCONS_NO_EXCEPTIONS=1");
+
 		PublicDependencyModuleNames.AddRange(new string[]{});
 			
 		

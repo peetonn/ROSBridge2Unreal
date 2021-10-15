@@ -53,27 +53,27 @@ void UWebSockConnection::Receive(const void* Data, SIZE_T Size, SIZE_T BytesRema
 	ROSData ParsedData;
 	if (CurrentTransportMode == ETransportMode::BSON)
 	{
-		try
-		{
+		// try
+		// {
 			ParsedData = jsoncons::bson::decode_bson<ROSData>(BinaryBuffer.GetData(), BinaryBuffer.GetData() + CurrentMessageLength);
 			if (IncomingMessageCallback) IncomingMessageCallback(ParsedData);
-		}
-		catch(jsoncons::ser_error e)
-		{
-			UE_LOG(LogROSBridge, Error, TEXT("Error while parsing BSON message (Ignoring message)"));
-		}
+		// }
+		// catch(jsoncons::ser_error e)
+		// {
+		// 	UE_LOG(LogROSBridge, Error, TEXT("Error while parsing BSON message (Ignoring message)"));
+		// }
 	}
 	else if (CurrentTransportMode == ETransportMode::JSON)
 	{
-		try
-		{
+		// try
+		// {
 			ParsedData = jsoncons::ojson::parse(jsoncons::ojson::string_view_type(reinterpret_cast<char*>(BinaryBuffer.GetData()), CurrentMessageLength));
 			if (IncomingMessageCallback) IncomingMessageCallback(ParsedData);
-		}
-		catch(jsoncons::ser_error e)
-		{
-			UE_LOG(LogROSBridge, Error, TEXT("Error while parsing JSON message (Ignoring message): %hs"), e.what());
-		}
+		// }
+		// catch(jsoncons::ser_error e)
+		// {
+		// 	UE_LOG(LogROSBridge, Error, TEXT("Error while parsing JSON message (Ignoring message): %hs"), e.what());
+		// }
 	}
 	
 	CurrentMessageLength = 0;	

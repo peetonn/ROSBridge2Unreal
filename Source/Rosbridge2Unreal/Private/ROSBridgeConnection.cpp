@@ -131,14 +131,14 @@ void UROSBridgeConnection::IncomingMessage(const ROSData& Message)
 		}
 		
 		ROSData ParsedData;
-		try{
+		// try{
 			ParsedData = jsoncons::ojson::parse(jsoncons::ojson::string_view_type(TCHAR_TO_UTF8(*CompleteMessage), NumCharacters));
 			MessageFragments.Remove(Id); //Parsed completely
 			this->IncomingMessage(ParsedData);
-		}catch(jsoncons::ser_error e)
-		{
-			UE_LOG(LogROSBridge, Error, TEXT("Error while parsing JSON message (Ignoring message): %hs"), e.what());
-		}
+		// }catch(jsoncons::ser_error e)
+		// {
+		// 	UE_LOG(LogROSBridge, Error, TEXT("Error while parsing JSON message (Ignoring message): %hs"), e.what());
+		// }
 		return;
 	}
 	
