@@ -8,7 +8,11 @@
 
 bool UTCPConnection::Initialize(FString IPAddress, int Port, ETransportMode Mode)
 {
+	#if PLATFORM_IOS
+	Socket = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->CreateSocket(NAME_Stream, TEXT("Rosbridge TCP client"), FNetworkProtocolTypes::IPv4);
+	#else
 	Socket = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->CreateSocket(NAME_Stream, TEXT("Rosbridge TCP client"), false);
+	#endif
 
 	TSharedRef<FInternetAddr> InternetAddress = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->CreateInternetAddr();
 	bool bIPValid;
